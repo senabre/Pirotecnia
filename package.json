@@ -12,12 +12,15 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.39.7",
     "lucide-react": "^0.344.0",
-    "odf-generator": "^1.1.0",
+    "pdfkit": "^0.14.0",
+    "blob-stream": "^0.1.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@types/pdfkit": "^0.13.4",
+    "@types/blob-stream": "^0.1.33",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

@@ -1,6 +1,6 @@
 import { supabase } from './supabase';
 import type { Factura, LineaFactura } from '../types/types';
-import { generateODF } from './odf';
+import { generatePDF } from './pdf';
 
 export async function getFacturas() {
   const { data, error } = await supabase
@@ -37,10 +37,9 @@ export async function createFactura(
 
   if (error) throw error;
 
-  // Generar documento ODF
-  await generateODF(data);
-
-  return data;
+  // Generar documento PDF
+  const pdfBlob = await generatePDF(data);
+  return { factura: data, pdf: pdfBlob };
 }
 
 export async function getFactura(id: string) {
