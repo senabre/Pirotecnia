@@ -1,11 +1,14 @@
 import React from 'react';
-import { Users } from 'lucide-react';
 import MainMenu from './components/MainMenu';
 import ClienteForm from './components/ClienteForm';
 import ClienteList from './components/ClienteList';
+import LoginForm from './components/LoginForm';
+import Header from './components/Header';
 import { useClientes } from './hooks/useClientes';
+import { useAuth } from './hooks/useAuth';
 
 function App() {
+  const { session, loading: authLoading } = useAuth();
   const {
     clientes,
     loading,
@@ -18,6 +21,11 @@ function App() {
   const [currentView, setCurrentView] = React.useState<'menu' | 'list' | 'manage'>('menu');
   const [isEditing, setIsEditing] = React.useState(false);
   const [clienteActual, setClienteActual] = React.useState(clienteInicial);
+
+  // Show login form if not authenticated
+  if (!authLoading && !session) {
+    return <LoginForm onSuccess={() => {}} />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +60,7 @@ function App() {
     }
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -99,21 +107,7 @@ function App() {
     <div className="min-h-screen bg-gray-100">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center">
-              <Users className="h-8 w-8 text-blue-600 mr-3" />
-              <h1 className="text-3xl font-bold text-gray-900">Gestión de Clientes</h1>
-            </div>
-            {currentView !== 'menu' && (
-              <button
-                onClick={() => setCurrentView('menu')}
-                className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800"
-              >
-                Volver al Menú
-              </button>
-            )}
-          </div>
-
+          <Header currentView={currentView} setCurrentView={setCurrentView} />
           <div className="space-y-8">
             {renderContent()}
           </div>
