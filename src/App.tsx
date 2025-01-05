@@ -4,6 +4,7 @@ import ClienteForm from './components/ClienteForm';
 import ClienteList from './components/ClienteList';
 import LoginForm from './components/LoginForm';
 import Header from './components/Header';
+import FacturacionMenu from './components/facturacion/FacturacionMenu';
 import { useClientes } from './hooks/useClientes';
 import { useAuth } from './hooks/useAuth';
 
@@ -18,7 +19,7 @@ function App() {
     removeCliente
   } = useClientes();
 
-  const [currentView, setCurrentView] = React.useState<'menu' | 'list' | 'manage'>('menu');
+  const [currentView, setCurrentView] = React.useState<'menu' | 'list' | 'manage' | 'billing'>('menu');
   const [isEditing, setIsEditing] = React.useState(false);
   const [clienteActual, setClienteActual] = React.useState(clienteInicial);
 
@@ -97,6 +98,13 @@ function App() {
               onDelete={handleDelete}
             />
           </div>
+        );
+      case 'billing':
+        return (
+          <FacturacionMenu
+            onNuevaFactura={() => {/* TODO: Implement */}}
+            onVerFacturas={() => {/* TODO: Implement */}}
+          />
         );
       default:
         return null;
