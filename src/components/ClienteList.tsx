@@ -45,10 +45,11 @@ export default function ClienteList({ clientes, onEdit, onDelete, viewOnly = fal
         />
       )}
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto max-h-[calc(100vh-200px)] overflow-y-auto">
         <table className="min-w-full bg-white rounded-lg shadow-md">
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-50 sticky top-0">
             <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Código</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ubicación</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo de Acto</th>
@@ -59,6 +60,9 @@ export default function ClienteList({ clientes, onEdit, onDelete, viewOnly = fal
           <tbody className="divide-y divide-gray-200">
             {clientesFiltrados.map((cliente) => (
               <tr key={cliente.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {cliente.client_code}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     {cliente.fotoUrl ? (
@@ -118,7 +122,7 @@ export default function ClienteList({ clientes, onEdit, onDelete, viewOnly = fal
       </div>
 
       {selectedCliente && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
           <div className="max-w-4xl w-full">
             <ClienteDetalles
               cliente={selectedCliente}
